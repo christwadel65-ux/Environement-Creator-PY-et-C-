@@ -26,6 +26,36 @@ dotnet publish -c Release -r win-x64 --self-contained
   - C#: .csproj with selected PackageReference entries, Program.cs, README.md, .gitignore
 - UI: single-page, no scroll, buttons anchored.
 
+## Git Setup
+- Remote: `origin` → `https://github.com/christwadel65-ux/Environement-Creator-PY-et-C-.git`
+- Default branch: `main`
+
+### .gitignore
+Build folders are excluded, only published artifacts are kept:
+
+```
+bin/
+obj/
+!bin/Release/**/publish/
+!bin/Release/**/publish/**
+```
+
+### Git LFS (Large File Storage)
+Binaries in the publish folder are tracked with LFS to keep the repo lean:
+
+```
+bin/Release/**/publish/*.exe filter=lfs diff=lfs merge=lfs -text
+bin/Release/**/publish/*.dll filter=lfs diff=lfs merge=lfs -text
+bin/Release/**/publish/*.pdb filter=lfs diff=lfs merge=lfs -text
+bin/Release/**/publish/*.baml filter=lfs diff=lfs merge=lfs -text
+```
+
+Initialize locally if needed:
+
+```bash
+git lfs install
+```
+
 ## Notes
-- Old WinForms files are excluded from the build; WPF `MainWindow` is the entry point.
+- Old WinForms files are excluded from compilation; WPF `MainWindow` is the entry point.
 - If the EXE is in use, close it before rebuilding to avoid file lock warnings.
