@@ -15,7 +15,9 @@ dotnet run
 ## Publish (self-contained, win-x64)
 ```bash
 dotnet publish -c Release -r win-x64 --self-contained
-# Output: bin/Release/net10.0-windows/win-x64/publish/EnvironmentCreator.exe
+# Copy artifacts to root publish folder
+Copy-Item -Recurse -Force ./bin/Release/net10.0-windows/win-x64/publish/* ./publish/
+# Output: publish/EnvironmentCreator.exe
 ```
 
 ## Features
@@ -36,18 +38,17 @@ Build folders are excluded, only published artifacts are kept:
 ```
 bin/
 obj/
-!bin/Release/**/publish/
-!bin/Release/**/publish/**
+publish/
 ```
 
 ### Git LFS (Large File Storage)
 Binaries in the publish folder are tracked with LFS to keep the repo lean:
 
 ```
-bin/Release/**/publish/*.exe filter=lfs diff=lfs merge=lfs -text
-bin/Release/**/publish/*.dll filter=lfs diff=lfs merge=lfs -text
-bin/Release/**/publish/*.pdb filter=lfs diff=lfs merge=lfs -text
-bin/Release/**/publish/*.baml filter=lfs diff=lfs merge=lfs -text
+/publish/*.exe filter=lfs diff=lfs merge=lfs -text
+/publish/*.dll filter=lfs diff=lfs merge=lfs -text
+/publish/*.pdb filter=lfs diff=lfs merge=lfs -text
+/publish/*.baml filter=lfs diff=lfs merge=lfs -text
 ```
 
 Initialize locally if needed:
