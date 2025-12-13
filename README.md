@@ -20,6 +20,13 @@ Copy-Item -Recurse -Force ./bin/Release/net10.0-windows/win-x64/publish/* ./publ
 # Output: publish/EnvironmentCreator.exe
 ```
 
+Or use the helper script on Windows:
+
+```powershell
+./publish.ps1            # build + copy to publish/
+./publish.ps1 -Commit    # build + copy + git add/commit/push
+```
+
 ## Features
 - Switch Python / C# library sets (expanders).
 - Folder validation (exists + write test file).
@@ -27,6 +34,13 @@ Copy-Item -Recurse -Force ./bin/Release/net10.0-windows/win-x64/publish/* ./publ
   - Python: requirements.txt, main.py, README.md, .gitignore
   - C#: .csproj with selected PackageReference entries, Program.cs, README.md, .gitignore
 - UI: single-page, no scroll, buttons anchored.
+
+## Usage
+- Enter `Name` and choose `Path` (use `...` to browse).
+- Select `Environment Type`: Python or C#.
+- Pick desired libraries from the expanders.
+- Click `Create` to scaffold the environment in the chosen folder.
+- Use `Clear` to reset the form.
 
 ## Git Setup
 - Remote: `origin` → `https://github.com/christwadel65-ux/Environement-Creator-PY-et-C-.git`
