@@ -1,7 +1,9 @@
-# Publish script: build, copy artifacts to root publish, optional commit
+# Publish script: build, copy artifacts to root publish, optional commit, create release zip
 param(
     [switch]$Commit,
-    [string]$Message = "chore: update publish artifacts"
+    [string]$Message = "chore: update publish artifacts",
+    [switch]$Zip,
+    [string]$Version = "1.0.0"
 )
 
 Write-Host "Publishing EnvironmentCreator (Release, win-x64, self-contained)" -ForegroundColor Cyan
@@ -16,6 +18,14 @@ if (-not (Test-Path $dst)) { New-Item -ItemType Directory -Path $dst | Out-Null 
 
 Write-Host "Copying artifacts to $dst" -ForegroundColor Cyan
 Copy-Item -Recurse -Force "$src/*" "$dst/"
+
+if ($Zip) {
+    $zipName = "EnvironmentCreator-$Version-publish.zip"
+    $zipPath = Join-Path $PSScriptRoot $zipName
+    Write-Host "Creating release archive: $zipName" -ForegroundColor Cyan
+    Compress-Archive -Path "$dst/*" -DestinationPath $zipPath -Force
+    Write-Host "Archive created: $zipPath (upload to GitHub releases)" -ForegroundColor Green
+}
 
 if ($Commit) {
     Write-Host "Committing publish artifacts" -ForegroundColor Cyan
