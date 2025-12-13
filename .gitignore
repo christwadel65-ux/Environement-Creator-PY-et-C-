@@ -14,3 +14,6 @@ publish/
 # Logs and temp
 *.log
 *.tmp
+
+# Release archives (upload to GitHub releases manually)
+*.zip
