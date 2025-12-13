@@ -2,10 +2,8 @@
 bin/
 obj/
 
-# But keep published artifacts
-!bin/Release/
-!bin/Release/**/publish/
-!bin/Release/**/publish/**
+# Keep root publish folder tracked
+publish/
 
 # VS/IDE
 .vs/
