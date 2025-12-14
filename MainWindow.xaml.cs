@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -167,6 +168,7 @@ public partial class MainWindow : Window
 
     private void CreatePythonEnvironment(string envPath, List<string> libraries)
     {
+        // Create requirements.txt
         string requirementsPath = Path.Combine(envPath, "requirements.txt");
         var libraryMap = new Dictionary<string, string>
         {
@@ -205,9 +207,62 @@ public partial class MainWindow : Window
         }
         File.WriteAllLines(requirementsPath, requirementsContent);
 
+        // Create other files
         File.WriteAllText(Path.Combine(envPath, ".gitignore"), "venv/\n__pycache__/\n*.pyc\n.env\n.vscode/\n.idea/\n*.egg-info/\n");
         File.WriteAllText(Path.Combine(envPath, "main.py"), "#!/usr/bin/env python3\n\nif __name__ == \"__main__\":\n    print(\"Hello from Python environment!\")\n");
         File.WriteAllText(Path.Combine(envPath, "README.md"), $"# {Path.GetFileName(envPath)}\n\nPython Environment\n\n## Setup\n\n```bash\npython -m venv venv\nvenv\\Scripts\\activate  # Windows\nsource venv/bin/activate  # macOS/Linux\npip install -r requirements.txt\n```\n");
+
+        // Create virtual environment
+        try
+        {
+            var venvProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "python",
+                    Arguments = $"-m venv \"{Path.Combine(envPath, "venv")}\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                }
+            };
+
+            venvProcess.Start();
+            venvProcess.WaitForExit(30000); // 30 seconds timeout
+
+            if (venvProcess.ExitCode != 0)
+            {
+                string error = venvProcess.StandardError.ReadToEnd();
+                System.Windows.MessageBox.Show($"Failed to create virtual environment:\n{error}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            // Install packages if there are any
+            if (libraries.Count > 0)
+            {
+                string pipPath = Path.Combine(envPath, "venv", "Scripts", "pip.exe");
+                if (File.Exists(pipPath))
+                {
+                    var pipProcess = new Process
+                    {
+                        StartInfo = new ProcessStartInfo
+                        {
+                            FileName = pipPath,
+                            Arguments = $"install -r \"{requirementsPath}\"",
+                            UseShellExecute = false,
+                            CreateNoWindow = true,
+                            WorkingDirectory = envPath
+                        }
+                    };
+                    pipProcess.Start();
+                    // Don't wait for pip install to complete (can be long)
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Windows.MessageBox.Show($"Virtual environment creation skipped:\n{ex.Message}\nYou can create it manually using 'python -m venv venv'", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 
     private void CreateCSharpEnvironment(string envPath, string name, List<string> libraries)
