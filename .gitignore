@@ -2,10 +2,12 @@
 bin/
 obj/
 
-# Keep root publish folder tracked
+# Exclude source code
+src/
+
+# Exclude compiled binaries (only docs)
 publish/
 
-# VS/IDE
 .vs/
 *.user
 .vscode/
