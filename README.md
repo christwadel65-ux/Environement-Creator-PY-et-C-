@@ -21,7 +21,7 @@ Includes automatic:
 ## 📋 Requirements
 
 - **Windows** 7+ or Windows Server 2008+
-- **.NET Runtime 10.0** (not included in published archive)
+- **.NET Runtime 10.0** (not included in Release 4.0.0)
 - *(Optional)* **Git** for automatic repo initialization
 - *(Optional)* **Python 3.x** for Python venv creation
 
