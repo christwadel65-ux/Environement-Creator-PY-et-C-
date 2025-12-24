@@ -1,99 +1,222 @@
-# Environment Creator
+# Environment Creator v4.0.0
 
-WPF desktop app to scaffold Python or C# environments with common libraries.
+Professional WPF application to create Python and C# development environments with pre-configured libraries and dependencies.
 
-## Requirements
-- .NET 10.0 SDK (or newer)
-- Windows (win-x64 target)
-- Python 3.x (for Python environment creation)
+![Version](https://img.shields.io/badge/version-4.0.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Platform](https://img.shields.io/badge/platform-Windows-blue)
 
-## Run (development)
+## 🎯 Overview
+
+EnvironmentCreator is a desktop application that scaffolds production-ready development environments for:
+- **Python** projects (Data Science, Web, ML/DL, API)
+- **C#** projects (Console, API, Web)
+
+Includes automatic:
+- Virtual environment creation (Python)
+- Dependency installation
+- Git repository initialization
+- Project scaffolding with best practices
+
+## 📋 Requirements
+
+- **Windows** 7+ or Windows Server 2008+
+- **.NET Runtime 10.0** (included in published archive)
+- *(Optional)* **Git** for automatic repo initialization
+- *(Optional)* **Python 3.x** for Python venv creation
+
+## 🚀 Quick Start
+
+### Download & Run
+1. Download `EnvironmentCreator-4.0.0-publish.zip`
+2. Extract the archive
+3. Run `EnvironmentCreator.exe`
+
+### Create Your First Environment
+1. Enter environment name: `my-project`
+2. Choose path: Click `...` to select folder
+3. Select type: **Python** or **C#**
+4. Choose preset: Click a quick-start configuration
+5. Click **Create** ✓
+
+## 📦 Features
+
+### Smart Presets
+6 pre-configured templates to jumpstart projects:
+- **Data Science** - NumPy, Pandas, Scikit-learn, Matplotlib
+- **Web Dev (FastAPI)** - FastAPI, SQLAlchemy, Pydantic
+- **Web Dev (Django)** - Django, ORM, Testing
+- **ML/DL** - TensorFlow, PyTorch, Deep Learning stack
+- **API (C#)** - ASP.NET Core, Swagger, EF Core
+- **Console (C#)** - Logging, Configuration
+
+### Automatic Setup
+- ✅ Python virtual environment creation
+- ✅ Package installation (pip)
+- ✅ C# project with NuGet packages
+- ✅ Git repository initialization
+- ✅ Scaffolding with README & examples
+
+### Environment History
+- Tracks all created environments
+- Quick access to previous projects
+- One-click folder opening
+- Copy path to clipboard
+- Remove from history
+
+## 🔧 Development
+
+### Build
 ```bash
-cd EnvironmentCreator
+dotnet build -c Debug
+```
+
+### Run (Development)
+```bash
 dotnet run
 ```
 
-## Publish (self-contained, win-x64)
-```bash
-dotnet publish -c Release -r win-x64 --self-contained
-# Copy artifacts to root publish folder
-Copy-Item -Recurse -Force ./bin/Release/net10.0-windows/win-x64/publish/* ./publish/
-# Output: publish/EnvironmentCreator.exe
-```
-
-Or use the helper script on Windows:
-
+### Publish (Release)
 ```powershell
-./publish.ps1            # build + copy to publish/
-./publish.ps1 -Commit    # build + copy + git add/commit/push
-./publish.ps1 -Zip -Version "1.0.0"  # build + create release zip
+# Using helper script
+.\publish.ps1 -Zip -Version "4.0.0"
+
+# Manual publish
+dotnet publish -c Release -r win-x64 --self-contained
 ```
 
-## Features
-- Switch Python / C# library sets (expanders).
-- Folder validation (exists + write test file).
-- **Automatic Python virtual environment creation** (`python -m venv venv`).
-- **Automatic package installation** for selected Python libraries.
-- Generates:
-  - **Python**: requirements.txt, main.py, README.md, .gitignore, venv/ (virtual environment)
-  - **C#**: .csproj with selected PackageReference entries, Program.cs, README.md, .gitignore
-- UI: single-page, no scroll, buttons anchored.
+## 📁 Project Structure
 
-## Usage
-1. Enter `Name` and choose `Path` (use `...` to browse).
-2. Select `Environment Type`: Python or C#.
-3. Pick desired libraries from the expanders.
-4. Click `Create` to scaffold the environment in the chosen folder.
-   - **Python**: Creates virtual environment and installs selected packages automatically
-   - **C#**: Creates .csproj with NuGet package references
-5. Use `Clear` to reset the form.
+```
+src/
+├── Core/                    # Business logic
+│   ├── Models/             # Data structures
+│   ├── Services/           # Creation logic (async)
+│   └── Utilities/          # Helpers
+├── UI/                      # Windows Forms & WPF
+│   ├── Windows/            # MainWindow
+│   └── Views/              # Custom controls
+└── [Bootstrap files]
 
-### Python Environment
-After creation, activate the environment:
+docs/                        # Complete documentation
+├── guides/                 # User & contributor guides
+└── architecture/           # Technical design
+
+tests/                       # Unit tests (ready for expansion)
+```
+
+### Namespaces
+```csharp
+EnvironmentCreator.Core.Models
+EnvironmentCreator.Core.Services
+EnvironmentCreator.Core.Utilities
+EnvironmentCreator.UI.Windows
+```
+
+## 📚 Documentation
+
+Full documentation in [docs/](docs/) folder:
+- **[GETTING_STARTED.md](docs/guides/GETTING_STARTED.md)** - User guide
+- **[CONTRIBUTING.md](docs/guides/CONTRIBUTING.md)** - Developer guide
+- **[ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md)** - Technical design
+- **[FOLDER_STRUCTURE.md](docs/architecture/FOLDER_STRUCTURE.md)** - Project organization
+
+## 🔄 Git Repository
+
 ```bash
-cd <your-project-folder>
-venv\Scripts\activate  # Windows
-# Packages are already installed!
+# Clone the repository
+git clone https://github.com/christwadel65-ux/Environement-Creator-PY-et-C-.git
+
+# Create a feature branch
+git checkout -b feature/my-feature
+```
+
+### What's Tracked
+- ✅ Documentation (docs/)
+- ✅ Configuration (csproj, sln)
+- ✅ Published binaries (publish/)
+- ❌ Source code (src/ - excluded)
+- ❌ Build artifacts (bin/, obj/)
+
+See [.gitignore](.gitignore) for details.
+
+## 💡 Usage Examples
+
+### Create Python Data Science Environment
+```powershell
+# 1. Click "Data Science" preset
+# 2. Enter name: "credit-analysis"
+# 3. Select path
+# 4. Click Create
+
+# 5. Setup environment
+cd credit-analysis
+venv\Scripts\activate
 python main.py
 ```
 
-### C# Environment
-After creation, build and run:
-```bash
-cd <your-project-folder>
+### Create C# API Project
+```powershell
+# 1. Select C#
+# 2. Click "API (C#)" preset
+# 3. Enter name: "my-api"
+# 4. Click Create
+
+# 5. Build and run
+cd my-api
 dotnet restore
 dotnet run
 ```
 
-## Git Setup
-- Remote: `origin` → `https://github.com/christwadel65-ux/Environement-Creator-PY-et-C-.git`
-- Default branch: `main`
+## 🐛 Troubleshooting
 
-### .gitignore
-Build folders are excluded, only published artifacts are kept:
+### App won't start
+- Ensure you have .NET Runtime 10.0
+- Check Windows version (Win7+)
+- Try running as Administrator
 
-```
-bin/
-obj/
-publish/
-```
+### Environment creation fails
+- Verify folder path exists and is writable
+- Ensure Git is installed (for repo init)
+- Check Python 3.x is in PATH (for Python envs)
 
-### Git LFS (Large File Storage)
-Binaries in the publish folder are tracked with LFS to keep the repo lean:
+### History is empty
+- First-time users see empty history
+- Create an environment to populate it
 
-```
-/publish/*.exe filter=lfs diff=lfs merge=lfs -text
-/publish/*.dll filter=lfs diff=lfs merge=lfs -text
-/publish/*.pdb filter=lfs diff=lfs merge=lfs -text
-/publish/*.baml filter=lfs diff=lfs merge=lfs -text
-```
+## 📝 Changelog
 
-Initialize locally if needed:
+### v4.0.0 (2025-12-24)
+- ✨ Professional architecture reorganization
+- 📚 Complete documentation suite added
+- 🎯 6 smart presets for quick setup
+- 🔧 Improved error handling
+- 📝 Contributing guidelines
 
-```bash
-git lfs install
-```
+**Previous versions** → See [CHANGELOG.md](CHANGELOG.md)
 
-## Notes
-- Old WinForms files are excluded from compilation; WPF `MainWindow` is the entry point.
-- If the EXE is in use, close it before rebuilding to avoid file lock warnings.
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details
+
+## 🤝 Contributing
+
+Contributions welcome! See [CONTRIBUTING.md](docs/guides/CONTRIBUTING.md) for:
+- Code standards
+- Commit conventions
+- Pull request process
+- Development setup
+
+## 💬 Support
+
+**Questions or Issues?**
+1. Check [FAQ](docs/guides/GETTING_STARTED.md#faq)
+2. Read [documentation](docs/)
+3. Create an issue on GitHub
+
+---
+
+**Version**: 4.0.0  
+**License**: MIT  
+**Platform**: Windows (win-x64)  
+**Runtime**: .NET 10.0+
