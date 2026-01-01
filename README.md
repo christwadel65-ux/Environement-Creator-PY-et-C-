@@ -335,9 +335,8 @@ Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de
 
 ## 👤 Auteur
 
-**Christ Wadel**
+**easycoding.fr**
 
-- 🌐 Portfolio : [christwadel65-ux.github.io/Site_git](https://christwadel65-ux.github.io/Site_git/)
 - 💼 GitHub : [@christwadel65-ux](https://github.com/christwadel65-ux)
 - 📦 npm : [@christwadel65-ux](https://www.npmjs.com/~christwadel65-ux)
 
